@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MuduguduConnect — Hire Locally. Get It Done Fast.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   DESIGN TOKENS — Green palette from logo
+══════════════════════════════════════ */
+:root {
+  --g900:#173404; --g800:#27500A; --g700:#3B6D11;
+  --g600:#639922; --g500:#8BBF3E; --g300:#C0DD97;
+  --g100:#EAF3DE; --g50:#F4FAE8;
+  --dot:#2C2C2A;  /* dark dot from logo */
+  --ink:#1A1C18;  --ink2:#3D3F39;  --ink3:#6E7068;
+  --surface:#fff; --bg:#F7FAF2;   --bg2:#EEF5E5;
+  --border:rgba(61,107,17,.12);   --border2:rgba(61,107,17,.22);
+  --err:#C0392B;  --warn:#E8960A;
+  --sh:0 4px 24px rgba(59,109,17,.13);
+  --r:14px; --r2:10px; --r3:8px;
+  --trans:.16s cubic-bezier(.4,0,.2,1);
+  --wa:#25D366; /* WhatsApp */
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:'DM Sans',sans-serif}
+a{text-decoration:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--g300);border-radius:3px}
+
+/* ── PAGES ── */
+.pg{display:none}.pg.on{display:block}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav{position:sticky;top:0;z-index:200;background:rgba(247,250,242,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;transition:box-shadow var(--trans)}
+nav.scrolled{box-shadow:0 2px 20px rgba(59,109,17,.1)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-icon{width:32px;height:32px;position:relative}
+.logo-icon svg{width:100%;height:100%}
+.logo-text{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--g700);letter-spacing:-.01em}
+.logo-text span{color:var(--g500)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nb{background:none;border:none;font-size:.875rem;font-weight:500;color:var(--ink2);padding:8px 13px;border-radius:var(--r3);transition:all var(--trans)}
+.nb:hover{background:var(--g100);color:var(--g700)}
+.nb.pri{background:var(--g700);color:#fff;padding:8px 18px;border-radius:var(--r3)}
+.nb.pri:hover{background:var(--g800)}
+.nb.out{border:1.5px solid var(--g600);color:var(--g700);padding:7px 14px}
+.nb.out:hover{background:var(--g700);color:#fff}
+.lang-btn{background:var(--g100);border:1px solid var(--border2);color:var(--g700);font-size:.78rem;font-weight:600;padding:5px 11px;border-radius:var(--r3);letter-spacing:.04em}
+.lang-btn:hover{background:var(--g300)}
+.hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;border-radius:var(--r3)}
+.hbg span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:var(--trans)}
+/* Emergency button in nav */
+.emerg-btn{display:flex;align-items:center;gap:6px;background:#EF4444;color:#fff;border:none;border-radius:var(--r3);font-size:.82rem;font-weight:600;padding:7px 14px;animation:emergPulse 2.5s infinite}
+@keyframes emergPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 6px rgba(239,68,68,0)}}
+.emerg-btn:hover{background:#DC2626}
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+.toast{position:fixed;bottom:24px;right:24px;z-index:600;background:var(--ink);color:#fff;padding:13px 20px;border-radius:12px;font-size:.88rem;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.2);display:none;align-items:center;gap:10px;max-width:340px}
+.toast.show{display:flex;animation:tin .25s ease}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+
+/* ══════════════════════════════════════
+   HOME — HERO
+══════════════════════════════════════ */
+.hero{background:linear-gradient(148deg,var(--g900) 0%,var(--g800) 40%,var(--g700) 100%);padding:76px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1.2' fill='rgba(255,255,255,.05)'/%3E%3Ccircle cx='8' cy='8' r='.7' fill='rgba(255,255,255,.03)'/%3E%3Ccircle cx='52' cy='15' r='.9' fill='rgba(255,255,255,.04)'/%3E%3C/svg%3E")}
+.hero-flag{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:.75rem;font-weight:500;padding:5px 15px;border-radius:50px;margin-bottom:20px;letter-spacing:.06em}
+.hero-flag::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--g500);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5.5vw,3.6rem);font-weight:400;color:#fff;line-height:1.14;margin-bottom:16px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--g300)}
+.hero-sub{color:rgba(255,255,255,.72);font-size:1rem;max-width:460px;margin:0 auto 36px;line-height:1.75;font-weight:300}
+
+/* Search bar */
+.srch{background:#fff;border-radius:16px;padding:16px;max-width:640px;margin:0 auto;box-shadow:0 16px 56px rgba(0,0,0,.25);display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
+.srch-field{flex:1 1 140px;display:flex;flex-direction:column;gap:3px}
+.srch-field label{font-size:.68rem;font-weight:600;color:var(--ink3);letter-spacing:.07em;text-transform:uppercase;padding-left:2px}
+.srch-field input,.srch-field select{padding:9px 12px;border:1.5px solid var(--border2);border-radius:var(--r3);font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color var(--trans);width:100%}
+.srch-field input:focus,.srch-field select:focus{border-color:var(--g600);background:#fff}
+.srch-divider{width:1px;background:var(--border);align-self:stretch;margin:4px 0}
+.srch-btn{align-self:flex-end;padding:10px 24px;background:var(--g700);color:#fff;border:none;border-radius:var(--r3);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:all var(--trans)}
+.srch-btn:hover{background:var(--g800);transform:translateY(-1px)}
+
+/* Stats */
+.hero-stats{display:flex;justify-content:center;gap:36px;margin-top:34px;flex-wrap:wrap}
+.hs-n{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--g300);display:block;line-height:1}
+.hs-l{color:rgba(255,255,255,.55);font-size:.75rem;margin-top:2px;letter-spacing:.02em}
+
+/* Ticker */
+.ticker-wrap{background:var(--g800);overflow:hidden;height:34px;display:flex;align-items:center}
+.ticker-inner{display:flex;white-space:nowrap;animation:ticker 30s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{display:inline-flex;align-items:center;gap:7px;padding:0 28px;font-size:.75rem;color:rgba(255,255,255,.85);font-weight:500;border-right:1px solid rgba(255,255,255,.15)}
+.tick-dot{width:5px;height:5px;border-radius:50%;background:var(--g500);animation:pulse 2s infinite}
+
+/* Trust bar */
+.trust-bar{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;padding:14px 24px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--border)}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:500;color:var(--ink3)}
+.trust-icon{width:26px;height:26px;border-radius:7px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0}
+
+/* ── SECTION ── */
+.sec{padding:56px 24px;max-width:1120px;margin:0 auto}
+.sec-hd{margin-bottom:32px}
+.sec-hd h2{font-family:'DM Serif Display',serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:400;color:var(--ink);margin-bottom:4px}
+.sec-hd p{color:var(--ink3);font-size:.9rem}
+.sec-hd-row{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* ══════════════════════════════════════
+   CATEGORIES
+══════════════════════════════════════ */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:10px;margin-bottom:32px}
+.cat-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px 6px;text-align:center;cursor:pointer;transition:all var(--trans);display:flex;flex-direction:column;align-items:center;gap:7px}
+.cat-btn:hover,.cat-btn.act{background:var(--g700);border-color:var(--g700);transform:translateY(-2px);box-shadow:0 6px 18px rgba(59,109,17,.28)}
+.cat-btn:hover .cat-ico,.cat-btn.act .cat-ico{background:rgba(255,255,255,.18)}
+.cat-btn:hover .cat-lbl,.cat-btn.act .cat-lbl{color:#fff}
+.cat-ico{width:42px;height:42px;border-radius:11px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:1.25rem;transition:background var(--trans)}
+.cat-lbl{font-size:.72rem;font-weight:600;color:var(--ink2);transition:color var(--trans);line-height:1.3}
+
+/* ══════════════════════════════════════
+   WORKER CARDS
+══════════════════════════════════════ */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:20px}
+.wcard{background:var(--surface);border-radius:var(--r);border:1.5px solid var(--border);padding:20px;cursor:pointer;transition:all var(--trans);position:relative;overflow:hidden}
+.wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g600),var(--g300));opacity:0;transition:opacity var(--trans)}
+.wcard:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(59,109,17,.14);border-color:var(--g500)}
+.wcard:hover::before{opacity:1}
+/* Boosted badge */
+.boost-badge{position:absolute;top:12px;left:12px;background:linear-gradient(90deg,#F59E0B,#FBBF24);color:#78350F;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:50px;letter-spacing:.05em}
+/* Availability dot */
+.avail-dot{position:absolute;top:14px;right:14px;width:10px;height:10px;border-radius:50%}
+.avail-dot.avail{background:#22C55E;box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(34,197,94,.3);animation:ripple 2.4s infinite}
+.avail-dot.busy{background:#F97316;box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(249,115,22,.3)}
+.avail-dot.booked{background:#94A3B8;box-shadow:0 0 0 2px #fff}
+@keyframes ripple{0%,100%{box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(34,197,94,.3)}50%{box-shadow:0 0 0 2px #fff,0 0 0 8px rgba(34,197,94,.08)}}
+.wcard-top{display:flex;align-items:flex-start;gap:13px;margin-bottom:12px}
+.ava{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:1.3rem;color:#fff;flex-shrink:0;position:relative}
+.ava img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.ava-verified{position:absolute;bottom:-2px;right:-2px;width:17px;height:17px;border-radius:50%;background:var(--g600);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.52rem;color:#fff}
+.wi h3{font-size:.97rem;font-weight:600;margin-bottom:3px;line-height:1.25}
+.wjob{font-size:.72rem;font-weight:600;color:var(--g700);background:var(--g100);padding:2px 9px;border-radius:50px;display:inline-block}
+.wmeta{display:flex;gap:12px;font-size:.78rem;color:var(--ink3);margin:9px 0 11px;flex-wrap:wrap}
+.wmeta span{display:flex;align-items:center;gap:3px}
+.stars-row{display:flex;gap:1px}
+.star{width:11px;height:11px;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.star.on{background:var(--warn)}
+.star.off{background:#DDD8CC}
+.wrate{font-family:'DM Serif Display',serif;font-size:1rem;font-weight:400;color:var(--g700)}
+.wrate span{font-size:.7rem;font-family:'DM Sans',sans-serif;color:var(--ink3)}
+.wbio{font-size:.82rem;color:var(--ink3);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:13px}
+.wfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.wprice{font-size:.8rem;color:var(--ink3)}
+.wprice strong{color:var(--ink);font-weight:600}
+/* Buttons */
+.wa-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--wa);color:#fff;border:none;border-radius:var(--r3);font-size:.78rem;font-weight:600;transition:all var(--trans)}
+.wa-btn:hover{background:#1EBE5B;transform:scale(1.03)}
+.vbtn{padding:7px 13px;background:var(--bg);border:none;border-radius:var(--r3);font-size:.78rem;font-weight:600;color:var(--g700);transition:all var(--trans)}
+.vbtn:hover{background:var(--g100)}
+
+/* ══════════════════════════════════════
+   SMART MATCH BANNER
+══════════════════════════════════════ */
+.match-banner{background:linear-gradient(135deg,#EAF7F0,#F0FAF5);border:1.5px solid rgba(34,197,94,.2);border-radius:var(--r);padding:20px;margin-bottom:24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.mb-ico{width:48px;height:48px;border-radius:14px;background:var(--g700);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.mb-body{flex:1;min-width:180px}
+.mb-title{font-weight:600;font-size:.92rem;color:var(--g800);margin-bottom:2px}
+.mb-sub{font-size:.8rem;color:var(--ink3);line-height:1.5}
+.mb-btn{padding:8px 18px;background:var(--g700);color:#fff;border:none;border-radius:var(--r3);font-size:.82rem;font-weight:600;cursor:pointer;transition:background var(--trans);white-space:nowrap}
+.mb-btn:hover{background:var(--g800)}
+
+/* ══════════════════════════════════════
+   FILTERS BAR
+══════════════════════════════════════ */
+.fbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px;align-items:center}
+.fchip{padding:7px 16px;border:1.5px solid var(--border2);border-radius:50px;background:var(--surface);font-size:.8rem;font-weight:500;color:var(--ink2);transition:all var(--trans)}
+.fchip:hover,.fchip.on{background:var(--g700);color:#fff;border-color:var(--g700)}
+.avail-chip{background:var(--g100);border-color:var(--g500);color:var(--g700)}
+.avail-chip.on{background:var(--g700);color:#fff}
+.sort-wrap{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink3)}
+.sort-wrap select{padding:6px 11px;border:1.5px solid var(--border2);border-radius:var(--r3);font-family:'DM Sans',sans-serif;font-size:.8rem;color:var(--ink);background:var(--surface);outline:none;cursor:pointer}
+
+/* ══════════════════════════════════════
+   PROFILE PAGE
+══════════════════════════════════════ */
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;font-size:.88rem;font-weight:500;color:var(--g700);padding:0;margin-bottom:24px;transition:gap var(--trans)}
+.back-btn:hover{gap:10px}
+.prof-hero{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:28px;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:20px}
+.prof-ava{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:2.4rem;color:#fff;flex-shrink:0;position:relative}
+.prof-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.prof-det{flex:1;min-width:200px}
+.prof-det h1{font-family:'DM Serif Display',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px}
+.ptags{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 12px}
+.ptag{padding:4px 12px;border-radius:50px;font-size:.75rem;font-weight:600}
+.ptag-job{background:var(--g100);color:var(--g700)}
+.ptag-loc{background:var(--bg2);color:var(--g800)}
+.ptag-av{background:#DCFCE7;color:#15803D}
+.ptag-busy{background:#FFEDD5;color:#C2410C}
+.ptag-booked{background:#F1F5F9;color:#64748B}
+.ptag-verified{background:linear-gradient(90deg,var(--g600),var(--g500));color:#fff}
+.pstats{display:flex;gap:24px;margin-bottom:6px;flex-wrap:wrap}
+.ps-v{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--g700);display:block;line-height:1}
+.ps-l{font-size:.7rem;color:var(--ink3);margin-top:2px}
+.cta-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.btn-p{padding:11px 22px;border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all var(--trans);display:inline-flex;align-items:center;gap:6px}
+.btn-pri{background:var(--g700);color:#fff}.btn-pri:hover{background:var(--g800)}
+.btn-wa{background:var(--wa);color:#fff}.btn-wa:hover{background:#1EBE5B}
+.btn-out{background:none;border:1.5px solid var(--border2);color:var(--ink)}.btn-out:hover{border-color:var(--g600);color:var(--g700)}
+.btn-red{background:#FEE2E2;color:#DC2626;border:none}.btn-red:hover{background:#FECACA}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pc{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:22px}
+.pc h3{font-family:'DM Serif Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:14px;color:var(--ink)}
+.skill-list{display:flex;flex-wrap:wrap;gap:6px}
+.stag{padding:4px 12px;border-radius:var(--r3);background:var(--g100);color:var(--g700);font-size:.78rem;font-weight:500;border:1px solid var(--border2)}
+.rev-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.rev-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.rev-hd{display:flex;justify-content:space-between;margin-bottom:5px}
+.rev-name{font-weight:600;font-size:.85rem}
+.rev-date{font-size:.72rem;color:var(--ink3)}
+.rev-txt{font-size:.82rem;color:var(--ink2);line-height:1.55}
+/* Trust score card */
+.trust-card{background:linear-gradient(135deg,var(--g50),#fff);border:1.5px solid var(--border);border-radius:var(--r);padding:20px}
+.ts-big{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--g700);line-height:1;margin-bottom:4px}
+.ts-bar-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.ts-label{font-size:.7rem;color:var(--ink3);width:72px;flex-shrink:0}
+.ts-track{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.ts-fill{height:100%;border-radius:3px;background:var(--g600);transition:width .6s}
+.ts-val{font-size:.7rem;font-weight:600;color:var(--g700);width:22px;text-align:right}
+
+/* ══════════════════════════════════════
+   DISTRICTS
+══════════════════════════════════════ */
+.district-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px;max-width:1120px;margin:0 auto;padding:0 24px 56px}
+.district-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r2);padding:16px;cursor:pointer;transition:all var(--trans);text-align:center}
+.district-card:hover{border-color:var(--g600);transform:translateY(-2px);box-shadow:var(--sh)}
+.dc-name{font-weight:600;font-size:.88rem;margin-bottom:3px}
+.dc-count{font-size:.75rem;color:var(--ink3)}
+.dc-bar{height:4px;border-radius:2px;background:var(--border);overflow:hidden;margin-top:9px}
+.dc-fill{height:100%;border-radius:2px;background:var(--g600)}
+
+/* ══════════════════════════════════════
+   HOW IT WORKS
+══════════════════════════════════════ */
+.how-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:56px 24px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:36px;max-width:960px;margin:32px auto 0}
+.step{text-align:center}
+.step-num{font-family:'DM Serif Display',serif;font-size:2.8rem;font-weight:400;color:rgba(59,109,17,.1);line-height:1;margin-bottom:-6px}
+.step-ico{width:56px;height:56px;border-radius:16px;background:var(--g700);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 14px;box-shadow:0 6px 20px rgba(59,109,17,.28)}
+.step h3{font-weight:600;font-size:.92rem;margin-bottom:5px}
+.step p{font-size:.82rem;color:var(--ink3);line-height:1.6}
+
+/* ══════════════════════════════════════
+   REGISTER WORKER PAGE
+══════════════════════════════════════ */
+.reg-wrap{max-width:720px;margin:0 auto;padding:44px 24px}
+.reg-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:36px}
+.reg-card h2{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;margin-bottom:5px}
+.reg-card>p{color:var(--ink3);margin-bottom:28px;font-size:.9rem}
+.form-sec{font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g700);margin:24px 0 14px;padding-bottom:7px;border-bottom:1.5px solid var(--bg2)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:.78rem;font-weight:600;margin-bottom:4px;color:var(--ink)}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border2);border-radius:var(--r3);font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color var(--trans),background var(--trans)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--g600);background:#fff}
+.fg textarea{resize:vertical;min-height:90px}
+.fg .hint{font-size:.72rem;color:var(--ink3);margin-top:3px}
+.upload-zone{border:2px dashed var(--border2);border-radius:var(--r2);padding:24px;text-align:center;cursor:pointer;transition:all var(--trans);background:var(--bg)}
+.upload-zone:hover{border-color:var(--g600);background:var(--g50)}
+.upload-zone p{font-size:.82rem;color:var(--ink3);margin-top:7px}
+.tag-input-wrap{border:1.5px solid var(--border2);border-radius:var(--r3);padding:7px 9px;display:flex;flex-wrap:wrap;gap:5px;background:var(--bg);cursor:text;min-height:46px;transition:border-color var(--trans)}
+.tag-input-wrap:focus-within{border-color:var(--g600);background:#fff}
+.tag-inp-tag{background:var(--g100);color:var(--g700);border-radius:6px;padding:2px 9px;font-size:.78rem;font-weight:500;display:flex;align-items:center;gap:4px}
+.tag-inp-tag button{background:none;border:none;font-size:.88rem;color:var(--g700);opacity:.7;cursor:pointer;padding:0;line-height:1}
+.tag-inp-tag button:hover{opacity:1}
+.tag-inp-input{border:none;background:none;outline:none;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--ink);min-width:110px;padding:2px 3px}
+.prog-card{background:var(--bg2);border-radius:var(--r3);padding:16px;margin-bottom:24px;border:1px solid var(--border)}
+.prog-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;font-size:.82rem;font-weight:600}
+.prog-track{height:7px;border-radius:4px;background:var(--border);overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--g700),var(--g500));transition:width .4s}
+.prog-tips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.prog-tip{font-size:.7rem;padding:2px 9px;border-radius:50px;background:var(--g100);color:var(--g700);font-weight:500}
+.ferr{color:var(--err);font-size:.78rem;margin-top:7px;display:none}
+
+/* ══════════════════════════════════════
+   CHATBOT
+══════════════════════════════════════ */
+.chat-fab{position:fixed;bottom:24px;right:24px;z-index:400;width:54px;height:54px;border-radius:50%;background:var(--g700);color:#fff;border:none;font-size:1.4rem;box-shadow:0 6px 24px rgba(59,109,17,.35);transition:all var(--trans);display:flex;align-items:center;justify-content:center}
+.chat-fab:hover{background:var(--g800);transform:scale(1.07)}
+.chat-window{position:fixed;bottom:88px;right:24px;z-index:400;width:340px;background:#fff;border-radius:18px;box-shadow:0 16px 56px rgba(0,0,0,.18);border:1.5px solid var(--border);display:none;flex-direction:column;overflow:hidden;max-height:480px}
+.chat-window.open{display:flex}
+.chat-hd{background:var(--g800);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:10px}
+.chat-hd-ico{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.chat-hd-info{flex:1}
+.chat-hd-info strong{font-size:.9rem;display:block}
+.chat-hd-info span{font-size:.72rem;opacity:.7}
+.chat-close{background:none;border:none;color:#fff;font-size:1.1rem;cursor:pointer;opacity:.7;padding:2px}
+.chat-close:hover{opacity:1}
+.chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;background:var(--bg)}
+.chat-msg{max-width:82%;padding:8px 12px;border-radius:12px;font-size:.84rem;line-height:1.5}
+.chat-msg.bot{background:#fff;border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:3px;color:var(--ink)}
+.chat-msg.user{background:var(--g700);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.chat-results{padding:0 14px 12px;display:flex;flex-direction:column;gap:7px}
+.chat-result-card{background:#fff;border:1px solid var(--border);border-radius:var(--r3);padding:10px 13px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color var(--trans)}
+.chat-result-card:hover{border-color:var(--g500)}
+.chat-foot{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:7px;background:#fff}
+.chat-input{flex:1;border:1.5px solid var(--border2);border-radius:8px;padding:8px 11px;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;color:var(--ink)}
+.chat-input:focus{border-color:var(--g600)}
+.chat-send{padding:8px 14px;background:var(--g700);color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:600;transition:background var(--trans)}
+.chat-send:hover{background:var(--g800)}
+
+/* ══════════════════════════════════════
+   MODALS
+══════════════════════════════════════ */
+.overlay{display:none;position:fixed;inset:0;background:rgba(18,20,18,.6);z-index:300;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;padding:34px;width:100%;max-width:420px;position:relative;animation:mup .2s ease;max-height:90vh;overflow-y:auto}
+@keyframes mup{from{opacity:0;transform:translateY(16px)}}
+.mcl{position:absolute;top:14px;right:14px;background:var(--bg);border:none;border-radius:50%;width:30px;height:30px;font-size:.95rem;color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background var(--trans)}
+.mcl:hover{background:var(--border)}
+.modal h2{font-family:'DM Serif Display',serif;font-size:1.45rem;font-weight:400;margin-bottom:5px}
+.modal>p{color:var(--ink3);font-size:.85rem;margin-bottom:22px}
+.role-tog{display:flex;gap:7px;margin-bottom:16px}
+.rb{flex:1;padding:9px;border:1.5px solid var(--border2);border-radius:var(--r3);background:none;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--ink);transition:all var(--trans);display:flex;align-items:center;justify-content:center;gap:5px}
+.rb.on{background:var(--g700);color:#fff;border-color:var(--g700)}
+.verify-box{background:var(--g100);border:1.5px solid var(--g300);border-radius:var(--r3);padding:18px;text-align:center;margin-bottom:16px}
+.verify-box p{font-size:.85rem;color:var(--g800);margin-bottom:12px}
+.code-inputs{display:flex;gap:8px;justify-content:center}
+.code-inputs input{width:42px;height:48px;border:2px solid var(--border2);border-radius:var(--r3);text-align:center;font-size:1.3rem;font-weight:700;color:var(--g700);outline:none;transition:border-color var(--trans)}
+.code-inputs input:focus{border-color:var(--g600)}
+.msw{text-align:center;margin-top:14px;font-size:.82rem;color:var(--ink3)}
+.msw a{color:var(--g700);font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;transition:text-decoration-color var(--trans)}
+.msw a:hover{text-decoration-color:var(--g700)}
+.ferr2{color:var(--err);font-size:.78rem;margin-top:5px;display:none}
+/* Contact modal thread */
+.msg-thread{background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px;max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+.msg-bubble{max-width:80%;padding:7px 11px;border-radius:11px;font-size:.82rem;line-height:1.5}
+.msg-bubble.out{background:var(--g700);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.msg-bubble.in{background:#fff;border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:3px}
+.msg-time{font-size:.62rem;opacity:.6;margin-top:1px;display:block}
+/* Review stars */
+.star-btn{font-size:1.7rem;background:none;border:none;opacity:.3;cursor:pointer;transition:opacity .14s,color .14s;color:#ccc}
+.star-btn.on{opacity:1;color:var(--warn)}
+/* Report modal */
+.report-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.rep-opt{display:flex;align-items:center;gap:9px;padding:10px 13px;border:1.5px solid var(--border2);border-radius:var(--r3);cursor:pointer;transition:border-color var(--trans),background var(--trans)}
+.rep-opt:hover,.rep-opt.on{border-color:var(--err);background:#FEF2F2}
+.rep-opt input{accent-color:var(--err)}
+/* Emergency overlay */
+.emerg-overlay-inner{background:#fff;border-radius:20px;padding:34px;width:100%;max-width:560px;position:relative;animation:mup .2s ease;max-height:90vh;overflow-y:auto}
+.emerg-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.emerg-hd-ico{width:46px;height:46px;border-radius:14px;background:#FEE2E2;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.emerg-hd h2{font-family:'DM Serif Display',serif;font-size:1.4rem;color:#DC2626}
+.emerg-hd p{font-size:.8rem;color:var(--ink3)}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{background:var(--g900);color:rgba(255,255,255,.65);padding:44px 24px 24px}
+.footer-inner{max-width:1120px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:36px;margin-bottom:36px}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.footer-desc{font-size:.8rem;line-height:1.75;opacity:.55;max-width:185px}
+.footer-col h4{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:12px}
+.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:7px;cursor:pointer;transition:color var(--trans)}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;opacity:.4;flex-wrap:wrap;gap:8px}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:768px){
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .pgrid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;background:rgba(247,250,242,.97);border-bottom:1px solid var(--border);padding:10px;flex-direction:column;backdrop-filter:blur(16px);gap:3px;z-index:100}
+  .nav-links.open{display:flex}
+  .hbg{display:flex}
+  .frow{grid-template-columns:1fr}
+  .srch{flex-direction:column}
+  .srch-divider{display:none}
+  .prof-hero{flex-direction:column}
+  .hero-stats{gap:20px}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .chat-window{width:calc(100vw - 32px);right:16px}
+  .emerg-btn span{display:none}
+}
+@media(max-width:480px){
+  .wgrid{grid-template-columns:1fr}
+  .reg-card{padding:22px}
+  .modal{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"><span id="toast-icon">✓</span><span id="toast-msg"></span></div>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+  <div class="logo" onclick="goPage('home')">
+    <div class="logo-icon">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="4" r="2.5" fill="#3B6D11"/>
+        <circle cx="30" cy="7" r="2" fill="#3B6D11"/>
+        <circle cx="36" cy="15" r="2.5" fill="#3B6D11"/>
+        <circle cx="36" cy="25" r="2" fill="#3B6D11"/>
+        <circle cx="30" cy="33" r="2.5" fill="#3B6D11"/>
+        <circle cx="20" cy="36" r="2" fill="#3B6D11"/>
+        <circle cx="10" cy="33" r="2.5" fill="#3B6D11"/>
+        <circle cx="4" cy="25" r="2" fill="#3B6D11"/>
+        <circle cx="4" cy="15" r="2.5" fill="#3B6D11"/>
+        <circle cx="10" cy="7" r="2" fill="#3B6D11"/>
+        <circle cx="20" cy="2" r="1.2" fill="#639922"/>
+        <circle cx="33" cy="10" r="1.2" fill="#639922"/>
+        <circle cx="38" cy="20" r="1.2" fill="#639922"/>
+        <circle cx="33" cy="30" r="1.2" fill="#639922"/>
+        <circle cx="20" cy="38" r="1.2" fill="#639922"/>
+        <circle cx="7" cy="30" r="1.2" fill="#639922"/>
+        <circle cx="2" cy="20" r="1.2" fill="#639922"/>
+        <circle cx="7" cy="10" r="1.2" fill="#639922"/>
+      </svg>
+    </div>
+    <span class="logo-text">mudugud<span>u</span>connect</span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <button class="nb" onclick="goPage('browse');closeMenu()">Find Workers</button>
+    <button class="nb" onclick="goPage('districts');closeMenu()">Districts</button>
+    <button class="nb" onclick="goPage('register-worker');closeMenu()" id="navRegWorker">Become a Worker</button>
+    <button class="lang-btn" onclick="cycleLang()" id="langBtn">EN</button>
+    <button class="nb out" onclick="openAuth('login');closeMenu()" id="navLogin">Login</button>
+    <button class="nb pri" onclick="openAuth('signup');closeMenu()" id="navSignup">Sign up</button>
+    <button class="nb out" onclick="logout();closeMenu()" id="navLogout" style="display:none">🚪 Logout</button>
+    <button class="nb" onclick="goToDashboard()" id="navDashboard" style="display:none">Dashboard</button>
+    <button class="emerg-btn" onclick="openEmergency()">🚨 <span>Find Now</span></button>
+  </div>
+  <button class="hbg" id="hbg" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="pg on" id="pg-home">
+  <!-- Live ticker -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker"></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-flag" id="heroFlag">🇷🇼 Kigali's #1 Worker Platform</div>
+    <h1 id="heroTitle">Hire <em>locally.</em><br>Get it done fast.</h1>
+    <p class="hero-sub" id="heroSub">Connect with trusted domestic workers in your neighborhood — cleaners, babysitters, guards, cooks and more.</p>
+
+    <div class="srch">
+      <div class="srch-field">
+        <label id="lblJob">Job type</label>
+        <select id="srchJob">
+          <option value="">All jobs</option>
+          <option>Cleaner</option><option>Babysitter</option><option>Guard</option>
+          <option>Cook</option><option>Gardener</option><option>Driver</option>
+          <option>Nurse</option><option>Night guard</option>
+        </select>
+      </div>
+      <div class="srch-divider"></div>
+      <div class="srch-field">
+        <label id="lblLoc">Neighborhood</label>
+        <select id="srchLoc">
+          <option value="">All districts</option>
+          <option>Kimihurura</option><option>Kacyiru</option><option>Gikondo</option>
+          <option>Nyamirambo</option><option>Remera</option><option>Gisozi</option>
+          <option>Kinyinya</option><option>Kibagabaga</option><option>Masaka</option>
+          <option>Muhima</option><option>Rwampara</option><option>Niboye</option>
+        </select>
+      </div>
+      <div class="srch-divider"></div>
+      <div class="srch-field">
+        <label id="lblAvail">Availability</label>
+        <select id="srchAvail">
+          <option value="">Any</option>
+          <option value="Available Now">Available Now</option>
+          <option value="Available This Week">This Week</option>
+        </select>
+      </div>
+      <button class="srch-btn" onclick="doSearch()">🔍 <span id="srchLabel">Search</span></button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hs"><span class="hs-n" id="statWorkers">0</span><span class="hs-l" id="statWLabel">Workers registered</span></div>
+      <div class="hs"><span class="hs-n">18</span><span class="hs-l" id="statDLabel">Districts covered</span></div>
+      <div class="hs"><span class="hs-n">4.8★</span><span class="hs-l" id="statRLabel">Average rating</span></div>
+      <div class="hs"><span class="hs-n" id="statJobs">0</span><span class="hs-l" id="statJLabel">Connections made</span></div>
+    </div>
+  </div>
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <div class="trust-item"><div class="trust-icon">✅</div><span id="t1">Verified profiles</span></div>
+    <div class="trust-item"><div class="trust-icon">⭐</div><span id="t2">Authentic reviews</span></div>
+    <div class="trust-item"><div class="trust-icon">📱</div><span id="t3">Direct WhatsApp contact</span></div>
+    <div class="trust-item"><div class="trust-icon">🛡️</div><span id="t4">Trust score system</span></div>
+    <div class="trust-item"><div class="trust-icon">⚡</div><span id="t5">Fast hiring</span></div>
+  </div>
+
+  <!-- Smart match banner -->
+  <div class="sec" style="padding-bottom:0">
+    <div class="match-banner">
+      <div class="mb-ico">🤖</div>
+      <div class="mb-body">
+        <div class="mb-title" id="mbTitle">Smart Match — Try the chatbot</div>
+        <div class="mb-sub" id="mbSub">Type naturally: "I need a cleaner in Kimihurura available now" and we'll find the right match instantly.</div>
+      </div>
+      <button class="mb-btn" onclick="openChat()" id="mbBtn">Try it →</button>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="sec">
+    <div class="sec-hd">
+      <h2 id="catTitle">Explore by job type</h2>
+      <p id="catSub">Click a category to filter profiles</p>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+
+  <!-- Featured + Recommended -->
+  <div class="sec" style="padding-top:0">
+    <div class="sec-hd sec-hd-row">
+      <div><h2 id="featTitle">Featured workers</h2><p id="featSub">Top-rated this week</p></div>
+      <button class="nb out" onclick="goPage('browse')" id="featAll">See all →</button>
+    </div>
+    <div class="wgrid" id="featGrid"></div>
+  </div>
+
+  <!-- How it works -->
+  <div class="how-bg">
+    <div style="max-width:1120px;margin:0 auto">
+      <div class="sec-hd" style="text-align:center">
+        <h2 id="howTitle">How it works</h2>
+        <p id="howSub">Finding the right worker has never been simpler</p>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-ico">🔍</div><h3 id="s1h">Search</h3><p id="s1p">Filter by job type, district and availability to find the perfect profile.</p></div>
+      <div class="step"><div class="step-num">02</div><div class="step-ico">👤</div><h3 id="s2h">Review</h3><p id="s2p">Read reviews, check skills and the worker's trust score.</p></div>
+      <div class="step"><div class="step-num">03</div><div class="step-ico">📱</div><h3 id="s3h">Contact</h3><p id="s3p">Connect directly via WhatsApp with a single tap.</p></div>
+      <div class="step"><div class="step-num">04</div><div class="step-ico">⭐</div><h3 id="s4h">Rate</h3><p id="s4p">Leave a review to help the community after the job.</p></div>
+    </div>
+  </div>
+
+  <!-- Premium / Monetization -->
+  <div class="sec" style="text-align:center">
+    <div class="sec-hd" style="text-align:center">
+      <h2 id="premTitle">Stand out with Premium</h2>
+      <p id="premSub">Boost your visibility and get hired faster</p>
+    </div>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:28px 32px;min-width:220px;text-align:center">
+        <div style="font-size:2rem;margin-bottom:10px">🚀</div>
+        <strong style="display:block;margin-bottom:6px" id="boost1">Boost Profile</strong>
+        <p style="font-size:.82rem;color:var(--ink3);margin-bottom:14px" id="boost1d">Appear at the top of search results for 7 days</p>
+        <button class="btn-p btn-pri" onclick="toast('Coming soon! 🎯')">5,000 RWF / week</button>
+      </div>
+      <div style="background:linear-gradient(135deg,var(--g50),#fff);border:2px solid var(--g500);border-radius:var(--r);padding:28px 32px;min-width:220px;text-align:center;position:relative">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--g600);color:#fff;font-size:.68rem;font-weight:700;padding:3px 12px;border-radius:50px;letter-spacing:.05em">POPULAR</div>
+        <div style="font-size:2rem;margin-bottom:10px">🏆</div>
+        <strong style="display:block;margin-bottom:6px" id="boost2">Top Worker Badge</strong>
+        <p style="font-size:.82rem;color:var(--ink3);margin-bottom:14px" id="boost2d">Premium badge + featured section on homepage</p>
+        <button class="btn-p btn-pri" onclick="toast('Coming soon! 🏆')">15,000 RWF / month</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BROWSE ══════════════ -->
+<div class="pg" id="pg-browse">
+  <div class="sec">
+    <div class="sec-hd sec-hd-row">
+      <div><h2 id="browseH">All workers</h2><p id="browseCount">Loading…</p></div>
+    </div>
+    <div class="fbar" id="filterBar">
+      <button class="fchip on" onclick="filterBy('',this)">All</button>
+      <button class="fchip" onclick="filterBy('Cleaner',this)">🧹 Cleaner</button>
+      <button class="fchip" onclick="filterBy('Babysitter',this)">👶 Babysitter</button>
+      <button class="fchip" onclick="filterBy('Guard',this)">🛡️ Guard</button>
+      <button class="fchip" onclick="filterBy('Cook',this)">🍳 Cook</button>
+      <button class="fchip" onclick="filterBy('Gardener',this)">🌿 Gardener</button>
+      <button class="fchip" onclick="filterBy('Driver',this)">🚗 Driver</button>
+      <button class="fchip avail-chip" onclick="filterAvail(this)" id="availChip">🟢 Available Now</button>
+      <div class="sort-wrap">
+        <span>Sort:</span>
+        <select id="sortSelect" onchange="applySort()">
+          <option value="rating">Top rated</option>
+          <option value="reviews">Most reviews</option>
+          <option value="rate_asc">Price ↑</option>
+          <option value="rate_desc">Price ↓</option>
+        </select>
+      </div>
+    </div>
+    <div class="wgrid" id="browseGrid"></div>
+  </div>
+</div>
+
+<!-- ══════════════ PROFILE ══════════════ -->
+<div class="pg" id="pg-profile">
+  <div class="sec">
+    <button class="back-btn" onclick="goBack()">← Back to results</button>
+    <div id="profContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════ DISTRICTS ══════════════ -->
+<div class="pg" id="pg-districts">
+  <div class="sec">
+    <div class="sec-hd">
+      <h2 id="distH">Explore by district</h2>
+      <p id="distSub" style="color:var(--ink3)">Click a neighborhood to see available workers</p>
+    </div>
+  </div>
+  <div class="district-grid" id="districtGrid"></div>
+</div>
+
+<!-- ══════════════ REGISTER WORKER ══════════════ -->
+<div class="pg" id="pg-register-worker">
+  <div class="reg-wrap">
+    <div class="reg-card">
+      <h2 id="rwTitle">Create my worker profile</h2>
+      <p id="rwSub">Fill in your details to appear in employer searches in your neighborhood.</p>
+
+      <div class="prog-card">
+        <div class="prog-hd"><span id="rwProgLabel">Profile completeness</span><span id="progPct">0%</span></div>
+        <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+        <div class="prog-tips" id="progTips"></div>
+      </div>
+
+      <div class="form-sec">Personal information</div>
+      <div class="frow">
+        <div class="fg"><label>Full name *</label><input type="text" id="rw-name" placeholder="e.g. Marie Uwimana" oninput="updateProgress()"></div>
+        <div class="fg"><label>Phone / WhatsApp *</label><input type="text" id="rw-phone" placeholder="e.g. 0780 000 000" oninput="updateProgress()"></div>
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label>Job type *</label>
+          <select id="rw-job" onchange="updateProgress()">
+            <option value="">Select</option>
+            <option>Cleaner</option><option>Babysitter</option><option>Guard</option>
+            <option>Cook</option><option>Gardener</option><option>Driver</option>
+            <option>Nurse</option><option>Night guard</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Neighborhood *</label>
+          <select id="rw-location" onchange="updateProgress()">
+            <option value="">Select</option>
+            <option>Kimihurura</option><option>Kacyiru</option><option>Gikondo</option>
+            <option>Nyamirambo</option><option>Remera</option><option>Gisozi</option>
+            <option>Kinyinya</option><option>Kibagabaga</option><option>Masaka</option>
+            <option>Muhima</option><option>Rwampara</option><option>Niboye</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Description *</label>
+        <textarea id="rw-bio" placeholder="Describe your experience, skills and what makes you stand out…" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="form-sec">Professional details</div>
+      <div class="frow">
+        <div class="fg"><label>Years of experience</label><input type="number" id="rw-exp" placeholder="e.g. 3" min="0" max="50" oninput="updateProgress()"></div>
+        <div class="fg"><label>Daily rate (RWF)</label><input type="number" id="rw-rate" placeholder="e.g. 5000" min="0" oninput="updateProgress()"></div>
+      </div>
+      <div class="fg">
+        <label>Skills</label>
+        <div class="tag-input-wrap" id="tagWrap" onclick="document.getElementById('tagInput').focus()">
+          <input type="text" id="tagInput" class="tag-inp-input" placeholder="Type a skill and press Enter…" onkeydown="handleTag(event)" oninput="updateProgress()">
+        </div>
+        <p class="hint">Press Enter or comma to add</p>
+      </div>
+      <div class="fg">
+        <label>Availability</label>
+        <select id="rw-avail">
+          <option value="Available Now">Available Now</option>
+          <option value="Available This Week">Available This Week</option>
+          <option value="Booked">Currently Booked</option>
+        </select>
+      </div>
+      <div class="form-sec">Profile photo (optional)</div>
+      <div class="upload-zone" onclick="toast('Photo upload requires backend connection.','📸')">
+        <div style="font-size:2rem">📸</div>
+        <p>Click to add a photo · JPG, PNG · Max 5 MB</p>
+      </div>
+      <div class="ferr" id="rw-err"></div>
+      <button class="btn-p btn-pri" style="margin-top:22px;width:100%;justify-content:center;font-size:.95rem;padding:13px" onclick="submitProfile()">
+        ✓ Publish my profile
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- AUTH -->
+<div class="overlay" id="authOverlay">
+  <div class="modal">
+    <button class="mcl" onclick="closeOverlay('authOverlay')">✕</button>
+    <h2 id="authTitle">Login</h2>
+    <p id="authSub">Access your MuduguduConnect account</p>
+    <div class="role-tog" id="roleTog" style="display:none">
+      <button class="rb on" id="rbEmp" onclick="setRole('employer')">🏠 Employer</button>
+      <button class="rb" id="rbWrk" onclick="setRole('worker')">👷 Worker</button>
+    </div>
+    <div class="fg" id="nameGrp" style="display:none"><label>Full name</label><input type="text" id="aName" placeholder="Your name"></div>
+    <div class="fg" id="photoGrp" style="display:none">
+      <label>Profile photo</label>
+      <input type="file" id="aPhoto" accept="image/*" onchange="handlePhotoUpload(this)">
+      <img id="photoPreview" style="display:none;width:80px;height:80px;border-radius:50%;margin-top:8px;object-fit:cover">
+    </div>
+    <div class="fg"><label>Email</label><input type="email" id="aEmail" placeholder="you@example.com"></div>
+    <div class="fg"><label>Password</label><input type="password" id="aPass" placeholder="••••••••"></div>
+    <div class="ferr2" id="aErr"></div>
+    <button class="btn-p btn-pri" style="width:100%;justify-content:center;margin-top:4px" onclick="submitAuth()" id="aBtn">Login</button>
+    <div class="msw" id="aSw">No account? <a onclick="switchToSignup()">Sign up free</a></div>
+    <!-- Verify step (hidden by default) -->
+    <div id="verifyStep" style="display:none">
+      <div class="verify-box">
+        <p id="verifyMsg">Enter the 6-digit code sent to your email</p>
+        <div class="code-inputs">
+          <input type="text" maxlength="1" oninput="moveCode(this,0)" id="c0">
+          <input type="text" maxlength="1" oninput="moveCode(this,1)" id="c1">
+          <input type="text" maxlength="1" oninput="moveCode(this,2)" id="c2">
+          <input type="text" maxlength="1" oninput="moveCode(this,3)" id="c3">
+          <input type="text" maxlength="1" oninput="moveCode(this,4)" id="c4">
+          <input type="text" maxlength="1" oninput="moveCode(this,5)" id="c5">
+        </div>
+      </div>
+      <button class="btn-p btn-pri" style="width:100%;justify-content:center" onclick="submitVerify()">Verify Email ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="overlay" id="contactOverlay">
+  <div class="modal">
+    <button class="mcl" onclick="closeOverlay('contactOverlay')">✕</button>
+    <h2>Contact worker</h2>
+    <p id="contactHd">Send a message or connect via WhatsApp</p>
+    <div class="msg-thread" id="msgThread">
+      <div class="msg-bubble in">Hello! I'm interested in your services. Are you available this week?<span class="msg-time">You · Just now</span></div>
+    </div>
+    <div class="fg"><label>Your name</label><input type="text" id="cName" placeholder="Your full name"></div>
+    <div class="fg"><label>Your phone</label><input type="text" id="cPhone" placeholder="0780 000 000"></div>
+    <div class="fg"><label>Preferred date</label><input type="date" id="cDate"></div>
+    <div class="fg"><label>Message</label><textarea id="cMsg" style="min-height:75px" placeholder="Describe the work, schedule, expectations…"></textarea></div>
+    <div style="display:flex;gap:9px">
+      <button class="btn-p btn-wa" style="flex:1;justify-content:center" onclick="sendWhatsApp()" id="waBtn">📱 WhatsApp</button>
+      <button class="btn-p btn-pri" style="flex:1;justify-content:center" onclick="sendMsg()">Send request</button>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW -->
+<div class="overlay" id="reviewOverlay">
+  <div class="modal">
+    <button class="mcl" onclick="closeOverlay('reviewOverlay')">✕</button>
+    <h2>Leave a review</h2>
+    <p>Your review helps employers choose with confidence.</p>
+    <div style="display:flex;gap:5px;margin-bottom:16px" id="starPicker">
+      <button class="star-btn" onclick="setStar(1)" data-s="1">★</button>
+      <button class="star-btn" onclick="setStar(2)" data-s="2">★</button>
+      <button class="star-btn" onclick="setStar(3)" data-s="3">★</button>
+      <button class="star-btn" onclick="setStar(4)" data-s="4">★</button>
+      <button class="star-btn" onclick="setStar(5)" data-s="5">★</button>
+    </div>
+    <div class="fg"><label>Your name</label><input type="text" id="rName" placeholder="Your first name"></div>
+    <div class="fg"><label>Your review</label><textarea id="rText" style="min-height:85px" placeholder="Share your experience with this worker…"></textarea></div>
+    <button class="btn-p btn-pri" style="width:100%;justify-content:center" onclick="submitReview()">Publish review</button>
+  </div>
+</div>
+
+<!-- REPORT -->
+<div class="overlay" id="reportOverlay">
+  <div class="modal">
+    <button class="mcl" onclick="closeOverlay('reportOverlay')">✕</button>
+    <h2>Report user</h2>
+    <p>Help keep the community safe. Reports are reviewed by our team.</p>
+    <div class="report-opts" id="reportOpts">
+      <label class="rep-opt"><input type="radio" name="repReason" value="Fake profile"> <span>🎭 Fake profile</span></label>
+      <label class="rep-opt"><input type="radio" name="repReason" value="Inappropriate behavior"> <span>⚠️ Inappropriate behavior</span></label>
+      <label class="rep-opt"><input type="radio" name="repReason" value="Scam"> <span>💰 Scam</span></label>
+      <label class="rep-opt"><input type="radio" name="repReason" value="Other"> <span>🔴 Other</span></label>
+    </div>
+    <div class="fg"><label>Additional details (optional)</label><textarea id="repDetails" style="min-height:70px" placeholder="Describe the issue…"></textarea></div>
+    <button class="btn-p btn-red" style="width:100%;justify-content:center;border:none" onclick="submitReport()">Submit report</button>
+  </div>
+</div>
+
+<!-- EMERGENCY -->
+<div class="overlay" id="emergencyOverlay">
+  <div class="emerg-overlay-inner">
+    <button class="mcl" onclick="closeOverlay('emergencyOverlay')">✕</button>
+    <div class="emerg-hd">
+      <div class="emerg-hd-ico">🚨</div>
+      <div>
+        <h2>Emergency — Find a worker now</h2>
+        <p>Workers online and available right now</p>
+      </div>
+    </div>
+    <div class="fbar" style="margin-bottom:16px">
+      <select id="emergJob" style="padding:7px 12px;border:1.5px solid var(--border2);border-radius:var(--r3);font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;background:var(--surface)">
+        <option value="">Any job</option>
+        <option>Cleaner</option><option>Babysitter</option><option>Guard</option>
+        <option>Cook</option><option>Gardener</option><option>Driver</option>
+        <option>Nurse</option><option>Night guard</option>
+      </select>
+      <button class="fchip on" onclick="loadEmergency()">🔄 Refresh</button>
+    </div>
+    <div id="emergGrid" class="wgrid" style="grid-template-columns:1fr"></div>
+  </div>
+</div>
+
+<!-- ══════════════ CHATBOT ══════════════ -->
+<button class="chat-fab" onclick="openChat()" id="chatFab">🤖</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-hd">
+    <div class="chat-hd-ico">🤖</div>
+    <div class="chat-hd-info">
+      <strong>MuduguduBot</strong>
+      <span>Smart worker search</span>
+    </div>
+    <button class="chat-close" onclick="closeChat()">✕</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">Hello! 👋 I can help you find the right worker. Try:<br><em>"Cleaner in Kacyiru available now"</em></div>
+  </div>
+  <div class="chat-results" id="chatResults"></div>
+  <div class="chat-foot">
+    <input type="text" class="chat-input" id="chatInput" placeholder="e.g. guard in Remera…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">→</button>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer id="mainFooter">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg width="20" height="20" viewBox="0 0 40 40"><circle cx="20" cy="4" r="2.5" fill="#9FE1CB"/><circle cx="30" cy="7" r="2" fill="#9FE1CB"/><circle cx="36" cy="15" r="2.5" fill="#9FE1CB"/><circle cx="36" cy="25" r="2" fill="#9FE1CB"/><circle cx="30" cy="33" r="2.5" fill="#9FE1CB"/><circle cx="20" cy="36" r="2" fill="#9FE1CB"/><circle cx="10" cy="33" r="2.5" fill="#9FE1CB"/><circle cx="4" cy="25" r="2" fill="#9FE1CB"/><circle cx="4" cy="15" r="2.5" fill="#9FE1CB"/><circle cx="10" cy="7" r="2" fill="#9FE1CB"/></svg>
+          muduguduconnect
+        </div>
+        <p class="footer-desc">Hire locally. Get it done fast. — Kigali's platform for trusted domestic workers.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a onclick="goPage('browse')">Find a worker</a>
+        <a onclick="goPage('districts')">Browse districts</a>
+        <a onclick="goPage('register-worker')">Become a worker</a>
+        <a onclick="openEmergency()">Emergency mode 🚨</a>
+      </div>
+      <div class="footer-col">
+        <h4>Trust</h4>
+        <a>Verification system</a>
+        <a>Rating & reviews</a>
+        <a>Report a user</a>
+        <a>Safety guide</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a>About us</a>
+        <a>Contact</a>
+        <a>Privacy policy</a>
+        <a>Terms of use</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 MuduguduConnect · Kigali, Rwanda</span>
+      <span>Hire locally. Get it done fast.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const COLORS = ['#3B6D11','#639922','#27500A','#0F6E56','#1a5f3c','#4a7c20'];
+const workers = [
+  {id:1,name:'Marie Uwimana',job:'Cleaner',loc:'Kimihurura',avail:'Available Now',bio:'Expert residential and office cleaning. 5 years experience in Kigali.',rating:4.9,reviews:32,trust:95,verified:true,rate:4000,exp:5,phone:'250780111001',skills:['Cleaning','Ironing','Organization'],boosted:true,online:true,reviewList:[{name:'Claire M.',stars:5,txt:'Marie is exceptional! My apartment has never been so clean.',date:'3 Apr 2025'},{name:'Eric N.',stars:5,txt:'Very professional and punctual. Highly recommend.',date:'28 Mar 2025'}]},
+  {id:2,name:'Jean Habimana',job:'Guard',loc:'Kacyiru',avail:'Available Now',bio:'Qualified security agent, ex-national police. Serious and punctual.',rating:4.7,reviews:18,trust:88,verified:true,rate:6000,exp:8,phone:'250780111002',skills:['Surveillance','First Aid','Reporting'],boosted:false,online:true,reviewList:[{name:'Paul D.',stars:5,txt:'Jean is reliable and very professional.',date:'5 Apr 2025'}]},
+  {id:3,name:'Alice Mukamana',job:'Babysitter',loc:'Remera',avail:'Available Now',bio:'Certified babysitter. Experience with children 0-12 years.',rating:4.8,reviews:24,trust:91,verified:true,rate:3500,exp:4,phone:'250780111003',skills:['Childcare','School help','Kids cooking'],boosted:true,online:false,reviewList:[{name:'Sophie K.',stars:5,txt:'Alice is wonderful with my children, they love spending time with her.',date:'1 Apr 2025'}]},
+  {id:4,name:'Pierre Nzeyimana',job:'Cook',loc:'Nyamirambo',avail:'Available This Week',bio:'Professional cook, specialist in Rwandan and international cuisine.',rating:4.6,reviews:15,trust:82,verified:true,rate:5000,exp:6,phone:'250780111004',skills:['Rwandan cuisine','International','Pastry'],boosted:false,online:true,reviewList:[]},
+  {id:5,name:'Grace Ingabire',job:'Gardener',loc:'Gisozi',avail:'Available Now',bio:'Passionate gardener. Lawn maintenance, hedge trimming, vegetable garden.',rating:4.3,reviews:9,trust:70,verified:false,rate:3000,exp:3,phone:'250780111005',skills:['Pruning','Watering','Vegetable garden','Flowers'],boosted:false,online:false,reviewList:[]},
+  {id:6,name:'David Mugisha',job:'Driver',loc:'Gikondo',avail:'Booked',bio:'Licensed driver B and C, own vehicle available. Punctual and discreet.',rating:4.5,reviews:21,trust:85,verified:true,rate:8000,exp:7,phone:'250780111006',skills:['License B','License C','English','Kigali knowledge'],boosted:false,online:true,reviewList:[]},
+  {id:7,name:'Sophie Umubyeyi',job:'Nurse',loc:'Kibagabaga',avail:'Available Now',bio:'Qualified nursing aide. Accompanying elderly and sick patients.',rating:4.9,reviews:28,trust:97,verified:true,rate:7000,exp:5,phone:'250780111007',skills:['Care','Medication','Rehabilitation','Empathy'],boosted:true,online:true,reviewList:[{name:'Marie L.',stars:5,txt:'Sophie cared for my mother with great tenderness.',date:'7 Apr 2025'}]},
+  {id:8,name:'Paul Ndagijimana',job:'Night guard',loc:'Muhima',avail:'Available This Week',bio:'Experienced night guard. Vigilant and responsible. Available from 8pm.',rating:4.4,reviews:11,trust:78,verified:true,rate:5500,exp:4,phone:'250780111008',skills:['Night surveillance','Rounds','Communication'],boosted:false,online:false,reviewList:[]},
+];
+const CATS = [
+  {emoji:'🧹',label:'Cleaner'},{emoji:'👶',label:'Babysitter'},
+  {emoji:'🛡️',label:'Guard'},{emoji:'🍳',label:'Cook'},
+  {emoji:'🌿',label:'Gardener'},{emoji:'🚗',label:'Driver'},
+  {emoji:'🤝',label:'Nurse'},{emoji:'🌙',label:'Night guard'},
+];
+const DISTRICTS = ['Kimihurura','Kacyiru','Gikondo','Nyamirambo','Remera','Gisozi','Kinyinya','Kibagabaga','Masaka','Muhima','Rwampara','Niboye'];
+
+// Extra workers from localStorage
+const stored = JSON.parse(localStorage.getItem('mc_extra') || '[]');
+stored.forEach(w => { if(!workers.find(x=>x.id===w.id)) workers.push(w); });
+
+// ═══════════════════════════════════════
+// I18N — EN / RW / FR
+// ═══════════════════════════════════════
+const LANGS = ['EN','RW','FR'];
+let lang = 0;
+const T = {
+  EN: {
+    heroFlag:'🇷🇼 Kigali\'s #1 Worker Platform',heroTitle:'Hire <em>locally.</em><br>Get it done fast.',heroSub:'Connect with trusted domestic workers in your neighborhood.',
+    srchLabel:'Search',lblJob:'Job type',lblLoc:'Neighborhood',lblAvail:'Availability',
+    browseH:'All workers',catTitle:'Explore by job type',catSub:'Click a category to filter profiles',
+    featTitle:'Featured workers',featSub:'Top-rated this week',featAll:'See all →',
+    howTitle:'How it works',howSub:'Finding the right worker has never been simpler',
+    s1h:'Search',s1p:'Filter by job type, district and availability.',s2h:'Review',s2p:'Read reviews and check the trust score.',s3h:'Contact',s3p:'Connect directly via WhatsApp.',s4h:'Rate',s4p:'Leave a review to help the community.',
+    mbTitle:'Smart Match — Try the chatbot',mbSub:'Type: "cleaner in Kimihurura available now"',mbBtn:'Try it →',
+    premTitle:'Stand out with Premium',premSub:'Boost your visibility and get hired faster',
+    statWLabel:'Workers registered',statDLabel:'Districts covered',statRLabel:'Average rating',statJLabel:'Connections made',
+    distH:'Explore by district',distSub:'Click a neighborhood to see available workers',
+    rwTitle:'Create my worker profile',rwSub:'Fill in your details to appear in employer searches.',
+    rwProgLabel:'Profile completeness',
+    t1:'Verified profiles',t2:'Authentic reviews',t3:'Direct WhatsApp contact',t4:'Trust score system',t5:'Fast hiring',
+  },
+  RW: {
+    heroFlag:'🇷🇼 Platform #1 y\'Akazi i Kigali',heroTitle:'Gushaka umukozi <em>mu cyaro.</em><br>Bigende vuba.',heroSub:'Huza n\'abakozi b\'inzobere mu mugi wawe — abasuku, abarizi, abarinzi n\'abandi.',
+    srchLabel:'Shakisha',lblJob:'Ubwoko bw\'akazi',lblLoc:'Akarere',lblAvail:'Ubushobozi',
+    browseH:'Abakozi bose',catTitle:'Shakisha ubwoko bw\'akazi',catSub:'Kanda category kugira ngo unyuzemo',
+    featTitle:'Abakozi batoze',featSub:'Abashyirwaho cyane iki cyumweru',featAll:'Reba bose →',
+    howTitle:'Uburyo bikorwa',howSub:'Gushaka umukozi neza ntabwo bigeze kuba byoroshye',
+    s1h:'Shakisha',s1p:'Shyira filtre ya ubwoko, akarere n\'ubushobozi.',s2h:'Reba',s2p:'Soma ibivugwa n\'trust score.',s3h:'Vugana',s3p:'Vugana na WhatsApp kanda rimwe.',s4h:'Nota',s4p:'Tanga igitekerezo nyuma y\'akazi.',
+    mbTitle:'Smart Match — Gerageza chatbot',mbSub:'Andika: "umusuku i Kimihurura ubashobora nonaha"',mbBtn:'Gerageza →',
+    premTitle:'Ongerera ubunararibonye',premSub:'Ongerera kubonekana, uhabwe akazi vuba',
+    statWLabel:'Abakozi biyandikishije',statDLabel:'Akarere gakuriye',statRLabel:'Nota ya hagati',statJLabel:'Guhuza byakozwe',
+    distH:'Shakisha akarere',distSub:'Kanda akarere urebe abakozi babashobora',
+    rwTitle:'Kora profile y\'umukozi',rwSub:'Uzuza amakuru yawe ngo ubonekane mu bisakuzo by\'abacuruzi.',
+    rwProgLabel:'Uburyo buto bwa profile',
+    t1:'Profile zisuzumwe',t2:'Ibivugwa by\'ukuri',t3:'Guhuza kwa WhatsApp',t4:'Trust score system',t5:'Gushaka vuba',
+  },
+  FR: {
+    heroFlag:'🇷🇼 Plateforme #1 des travailleurs à Kigali',heroTitle:'Embauchez <em>localement.</em><br>Faites-le vite.',heroSub:'Connectez-vous avec des travailleurs de confiance dans votre quartier.',
+    srchLabel:'Rechercher',lblJob:'Type de métier',lblLoc:'Quartier',lblAvail:'Disponibilité',
+    browseH:'Tous les travailleurs',catTitle:'Explorer par métier',catSub:'Cliquez une catégorie pour filtrer',
+    featTitle:'Profils en vedette',featSub:'Les mieux notés cette semaine',featAll:'Voir tous →',
+    howTitle:'Comment ça marche',howSub:'Trouver le bon travailleur n\'a jamais été aussi simple',
+    s1h:'Cherchez',s1p:'Filtrez par métier, quartier et disponibilité.',s2h:'Consultez',s2p:'Lisez les avis et vérifiez le score de confiance.',s3h:'Contactez',s3p:'Connectez directement via WhatsApp.',s4h:'Évaluez',s4p:'Laissez un avis pour aider la communauté.',
+    mbTitle:'Smart Match — Essayez le chatbot',mbSub:'Tapez : "nettoyeur à Kimihurura disponible maintenant"',mbBtn:'Essayer →',
+    premTitle:'Démarquez-vous avec Premium',premSub:'Boostez votre visibilité et soyez embauché plus vite',
+    statWLabel:'Travailleurs inscrits',statDLabel:'Quartiers couverts',statRLabel:'Note moyenne',statJLabel:'Mises en relation',
+    distH:'Explorer par quartier',distSub:'Cliquez sur un quartier pour voir les travailleurs disponibles',
+    rwTitle:'Créer mon profil travailleur',rwSub:'Complétez vos informations pour apparaître dans les recherches.',
+    rwProgLabel:'Complétude du profil',
+    t1:'Profils vérifiés',t2:'Ibivugwa by\'ukuri',t3:'Guhuza kwa WhatsApp',t4:'Trust score system',t5:'Gushaka vuba',
+  }
+};
+function cycleLang(){
+  lang=(lang+1)%3;
+  const l=LANGS[lang];
+  document.getElementById('langBtn').textContent=l;
+  const t=T[l];
+  for(const [k,v] of Object.entries(t)){
+    const el=document.getElementById(k);
+    if(el){ if(k.startsWith('hero')) el.innerHTML=v; else el.textContent=v; }
+  }
+}
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let currentPage='home', prevPage='home';
+let filterJob='', filterLoc='', filterAvailOnly=false, sortMode='rating';
+let profileWorker=null, contactWorker=null, reviewTarget=null, reportTarget=null;
+let curTags=[]; let jobsMade=0; let starRating=0;
+let currentUser=null;
+const token=()=>localStorage.getItem('mc_token');
+
+// Fetch workers from API
+async function fetchWorkers(){
+  try {
+    const res = await fetch('/api/workers');
+    if(res.ok){
+      const data = await res.json();
+      // Merge with hardcoded for now, but prioritize API
+      const apiWorkers = data.map(w => ({
+        id: w.id,
+        name: w.user ? `${w.user.firstName} ${w.user.lastName}` : 'Unknown',
+        job: w.job,
+        loc: w.location,
+        avail: w.availability,
+        bio: w.description || '',
+        rating: w.reviews && w.reviews.length ? w.reviews.reduce((s,r)=>s+r.rating,0)/w.reviews.length : 0,
+        reviews: w.reviews ? w.reviews.length : 0,
+        trust: 80, // placeholder
+        verified: true, // placeholder
+        rate: w.rate_per_day,
+        exp: w.exp_years,
+        phone: w.phone,
+        skills: w.skills ? JSON.parse(w.skills) : [],
+        boosted: false,
+        online: w.availability === 'Available Now',
+        reviewList: w.reviews ? w.reviews.map(r => ({
+          name: r.employer ? `${r.employer.firstName} ${r.employer.lastName}` : 'Anonymous',
+          stars: r.rating,
+          txt: r.comment,
+          date: new Date(r.createdAt).toLocaleDateString()
+        })) : []
+      }));
+      workers.push(...apiWorkers);
+    }
+  } catch(e) { console.log('Failed to fetch workers from API', e); }
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function goPage(id){
+  prevPage=currentPage; currentPage=id;
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  const pg=document.getElementById('pg-'+id);
+  if(pg){ pg.classList.add('on'); window.scrollTo({top:0,behavior:'smooth'}); }
+  const footer=document.getElementById('mainFooter');
+  if(footer) footer.style.display=id==='home'?'block':'block';
+  if(id==='browse') renderBrowse();
+  if(id==='districts') renderDistricts();
+  if(id==='home'){ renderFeatured(); renderTicker(); }
+  history.pushState({page: id}, '', '#'+id);
+}
+function goBack(){ goPage(prevPage==='profile'?'browse':prevPage); }
+function closeMenu(){ document.getElementById('navLinks').classList.remove('open'); }
+function toggleMenu(){ document.getElementById('navLinks').classList.toggle('open'); }
+
+// Scroll shadow
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>10);
+});
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+let toastTimer;
+function toast(msg,icon='✓',isErr=false){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-icon').textContent=icon;
+  document.getElementById('toast-msg').textContent=msg;
+  t.style.background=isErr?'#991B1B':null;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.page) {
+    goPage(e.state.page);
+  }
+});
+
+// ═══════════════════════════════════════
+// CARD BUILDER
+// ═══════════════════════════════════════
+function starsHtml(r){
+  const full=Math.round(r);
+  return Array.from({length:5},(_,i)=>`<div class="star ${i<full?'on':'off'}"></div>`).join('');
+}
+function availClass(a){ return a==='Available Now'?'avail':a==='Booked'?'booked':'busy'; }
+function availBadge(a){
+  if(a==='Available Now') return '<span style="color:#15803D;font-size:.72rem;font-weight:600">🟢 Available Now</span>';
+  if(a==='Booked') return '<span style="color:#64748B;font-size:.72rem;font-weight:600">⏱ Booked</span>';
+  return '<span style="color:#C2410C;font-size:.72rem;font-weight:600">🟡 This week</span>';
+}
+function buildCard(w){
+  const col=COLORS[w.id%COLORS.length];
+  const initials=w.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+  return `<div class="wcard" onclick="openProfile(${w.id})">
+    ${w.boosted?'<div class="boost-badge">⭐ TOP</div>':''}
+    <div class="avail-dot ${availClass(w.avail)}"></div>
+    <div class="wcard-top">
+      <div class="ava" style="background:${col}">
+        ${w.photo?`<img src="/assets/uploads/${w.photo}" alt="${w.name}">`:`<span>${initials}</span>`}
+        ${w.verified?'<div class="ava-verified">✓</div>':''}
+      </div>
+      <div class="wi">
+        <h3>${w.name}</h3>
+        <span class="wjob">${w.job}</span>
+      </div>
+    </div>
+    <div class="wmeta">
+      <span>📍 ${w.loc}</span>
+      <span>${availBadge(w.avail)}</span>
+      ${w.online?'<span style="color:#16A34A;font-size:.72rem">● Online</span>':''}
+    </div>
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:9px">
+      <div class="stars-row">${starsHtml(w.rating)}</div>
+      <span class="wrate">${w.rating} <span>(${w.reviews} reviews)</span></span>
+    </div>
+    <p class="wbio">${w.bio}</p>
+    <div class="wfoot">
+      <span class="wprice"><strong>${w.rate?w.rate.toLocaleString()+' RWF':'-'}</strong>/day</span>
+      <div style="display:flex;gap:6px">
+        <button class="wa-btn" onclick="event.stopPropagation();openContact(${w.id})">📱 WhatsApp</button>
+        <button class="vbtn" onclick="event.stopPropagation();openProfile(${w.id})">View →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// TICKER
+// ═══════════════════════════════════════
+function renderTicker(){
+  const items=[
+    '👶 Alice Mukamana hired in Remera',
+    '🧹 Marie Uwimana just got a 5-star review',
+    '🛡️ Jean Habimana available in Kacyiru',
+    '🍳 Pierre Nzeyimana available this week',
+    '🌿 New gardener joined from Gisozi',
+    '⭐ Sophie Umubyeyi — rated 4.9 stars',
+    '🚨 Emergency request completed in 8 min',
+    '📱 12 new connections made today',
+  ];
+  const html=items.map(i=>`<div class="tick-item"><div class="tick-dot"></div>${i}</div>`).join('');
+  const el=document.getElementById('ticker');
+  if(el) el.innerHTML=html+html;
+}
+
+// ═══════════════════════════════════════
+// CATEGORIES
+// ═══════════════════════════════════════
+function renderCats(){
+  const g=document.getElementById('catGrid');
+  if(!g) return;
+  g.innerHTML=CATS.map(c=>`<button class="cat-btn ${filterJob===c.label?'act':''}" onclick="catFilter('${c.label}',this)">
+    <div class="cat-ico">${c.emoji}</div>
+    <span class="cat-lbl">${c.label}</span>
+  </button>`).join('');
+}
+function catFilter(job,btn){
+  filterJob=filterJob===job?'':job;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('act'));
+  if(filterJob) btn.classList.add('act');
+  goPage('browse');
+}
+
+// ═══════════════════════════════════════
+// FEATURED
+// ═══════════════════════════════════════
+function renderFeatured(){
+  const g=document.getElementById('featGrid');
+  if(!g) return;
+  const sorted=[...workers].sort((a,b)=>(b.boosted-a.boosted)||(b.rating-a.rating));
+  g.innerHTML=sorted.slice(0,4).map(buildCard).join('');
+  document.getElementById('statWorkers').textContent=workers.length+'+';
+  document.getElementById('statJobs').textContent=jobsMade+'+';
+}
+
+// ═══════════════════════════════════════
+// BROWSE & FILTERS
+// ═══════════════════════════════════════
+function renderBrowse(){
+  let list=[...workers];
+  if(filterJob) list=list.filter(w=>w.job===filterJob);
+  if(filterLoc) list=list.filter(w=>w.loc===filterLoc);
+  if(filterAvailOnly) list=list.filter(w=>w.avail==='Available Now');
+  if(sortMode==='rating') list.sort((a,b)=>(b.boosted-a.boosted)||(b.rating-a.rating));
+  else if(sortMode==='reviews') list.sort((a,b)=>b.reviews-a.reviews);
+  else if(sortMode==='rate_asc') list.sort((a,b)=>a.rate-b.rate);
+  else if(sortMode==='rate_desc') list.sort((a,b)=>b.rate-a.rate);
+  const g=document.getElementById('browseGrid');
+  if(g) g.innerHTML=list.length?list.map(buildCard).join(''):`<p style="color:var(--ink3);padding:24px 0">No workers found for this filter.</p>`;
+  const c=document.getElementById('browseCount');
+  if(c) c.textContent=`${list.length} worker${list.length!==1?'s':''} found`;
+}
+function filterBy(job,btn){
+  filterJob=job;
+  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderBrowse();
+}
+function filterAvail(btn){
+  filterAvailOnly=!filterAvailOnly;
+  btn.classList.toggle('on',filterAvailOnly);
+  renderBrowse();
+}
+function applySort(){
+  sortMode=document.getElementById('sortSelect').value;
+  renderBrowse();
+}
+function doSearch(){
+  filterJob=document.getElementById('srchJob').value;
+  const loc=document.getElementById('srchLoc').value;
+  const av=document.getElementById('srchAvail').value;
+  filterAvailOnly=av==='Available Now';
+  goPage('browse');
+  if(loc){ setTimeout(()=>{ document.getElementById('browseGrid').querySelectorAll('.wcard').forEach(c=>{ /* district filter in renderBrowse would need enhancement */ }); },50); }
+}
+
+// ═══════════════════════════════════════
+// DISTRICTS
+// ═══════════════════════════════════════
+function renderDistricts(){
+  const g=document.getElementById('districtGrid');
+  if(!g) return;
+  const max=Math.max(...DISTRICTS.map(d=>workers.filter(w=>w.loc===d).length),1);
+  g.innerHTML=DISTRICTS.map(d=>{
+    const cnt=workers.filter(w=>w.loc===d).length;
+    const pct=Math.round(cnt/max*100);
+    return `<div class="district-card" onclick="filterJob='';filterLoc='${d}';filterAvailOnly=false;goPage('browse');renderBrowse()">
+      <div class="dc-name">${d}</div>
+      <div class="dc-count">${cnt} worker${cnt!==1?'s':''}</div>
+      <div class="dc-bar"><div class="dc-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════
+// PROFILE PAGE
+// ═══════════════════════════════════════
+function openProfile(id){
+  const w=workers.find(x=>x.id===id);
+  if(!w) return;
+  profileWorker=w;
+  const col=COLORS[w.id%COLORS.length];
+  const initials=w.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+  const skillsHtml=(w.skills||[]).map(s=>`<span class="stag">${s}</span>`).join('');
+  const revHtml=(w.reviewList||[]).length
+    ? (w.reviewList).map(r=>`<div class="rev-item">
+        <div class="rev-hd"><span class="rev-name">${r.name}</span><span class="rev-date">${r.date||''}</span></div>
+        <div class="stars-row" style="margin-bottom:5px">${starsHtml(r.stars)}</div>
+        <p class="rev-txt">${r.txt}</p>
+      </div>`).join('')
+    : '<p style="color:var(--ink3);font-size:.85rem">No reviews yet. Be the first to leave one!</p>';
+
+  const tsRows=[
+    {l:'Reliability',v:w.trust},
+    {l:'Communication',v:Math.min(100,w.trust+5)},
+    {l:'Quality',v:Math.min(100,w.trust-3)},
+  ];
+
+  document.getElementById('profContent').innerHTML=`
+    <div class="prof-hero">
+      <div class="prof-ava" style="background:${col}">
+        ${w.photo?`<img src="/assets/uploads/${w.photo}" alt="${w.name}">`:`${initials}`}
+      </div>
+      <div class="prof-det">
+        <h1>${w.name}</h1>
+        <div class="ptags">
+          <span class="ptag ptag-job">${w.job}</span>
+          <span class="ptag ptag-loc">📍 ${w.loc}</span>
+          <span class="ptag ${w.avail==='Available Now'?'ptag-av':w.avail==='Booked'?'ptag-booked':'ptag-busy'}">${w.avail}</span>
+          ${w.verified?'<span class="ptag ptag-verified">✓ Verified</span>':''}
+          ${w.boosted?'<span class="ptag" style="background:linear-gradient(90deg,#F59E0B,#FBBF24);color:#78350F">⭐ Top Worker</span>':''}
+          ${w.online?'<span class="ptag" style="background:#DCFCE7;color:#15803D">● Online</span>':''}
+        </div>
+        <div class="pstats">
+          <div class="ps"><span class="ps-v">${w.rating}</span><span class="ps-l">Rating</span></div>
+          <div class="ps"><span class="ps-v">${w.reviews}</span><span class="ps-l">Reviews</span></div>
+          <div class="ps"><span class="ps-v">${w.exp}y</span><span class="ps-l">Experience</span></div>
+          <div class="ps"><span class="ps-v">${w.rate?w.rate.toLocaleString()+' RWF':'-'}</span><span class="ps-l">Per day</span></div>
+        </div>
+        <div class="cta-row">
+          <button class="btn-p btn-wa" onclick="openContact(${w.id})">📱 Contact via WhatsApp</button>
+          <button class="btn-p btn-pri" onclick="openReview(${w.id})">⭐ Leave a review</button>
+          <button class="btn-p btn-out" onclick="openReport(${w.id})">🚩 Report</button>
+        </div>
+      </div>
+    </div>
+    <div class="pgrid">
+      <div class="pc"><h3>About</h3><p style="font-size:.85rem;color:var(--ink2);line-height:1.65">${w.bio}</p></div>
+      <div class="trust-card">
+        <div style="font-size:.78rem;color:var(--ink3);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.07em">Trust score</div>
+        <div class="ts-big">${w.trust}</div>
+        <div style="font-size:.75rem;color:var(--ink3);margin-bottom:12px">out of 100</div>
+        ${tsRows.map(r=>`<div class="ts-bar-row"><span class="ts-label">${r.l}</span><div class="ts-track"><div class="ts-fill" style="width:${r.v}%"></div></div><span class="ts-val">${r.v}</span></div>`).join('')}
+      </div>
+      <div class="pc"><h3>Skills</h3><div class="skill-list">${skillsHtml||'<p style="color:var(--ink3);font-size:.85rem">No skills listed yet.</p>'}</div></div>
+      <div class="pc"><h3>Reviews (${w.reviews})</h3>${revHtml}</div>
+    </div>`;
+  goPage('profile');
+}
+
+// ═══════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════
+let authMode='login', userRole='employer';
+function openAuth(mode){
+  authMode=mode;
+  const elTitle=document.getElementById('authTitle');
+  const elSub=document.getElementById('authSub');
+  const elBtn=document.getElementById('aBtn');
+  const elSw=document.getElementById('aSw');
+  const elPhotoGrp=document.getElementById('photoGrp');
+  const elNameGrp=document.getElementById('nameGrp');
+  const elRoleTog=document.getElementById('roleTog');
+  const elVerifyStep=document.getElementById('verifyStep');
+  const elErr=document.getElementById('aErr');
+  const elOverlay=document.getElementById('authOverlay');
+  
+  if(elTitle) elTitle.textContent=mode==='login'?'Login':'Create account';
+  if(elSub) elSub.textContent=mode==='login'?'Access your MuduguduConnect account':'Join MuduguduConnect today';
+  if(elBtn) elBtn.textContent=mode==='login'?'Login':'Create account';
+  if(elSw) elSw.innerHTML=mode==='login'?'No account? <a onclick="switchToSignup()">Sign up free</a>':'Already have an account? <a onclick="openAuth(\'login\')">Login</a>';
+  if(elPhotoGrp) elPhotoGrp.style.display=mode==='signup'?'block':'none';
+  if(elNameGrp) elNameGrp.style.display=mode==='signup'?'block':'none';
+  if(elRoleTog) elRoleTog.style.display=mode==='signup'?'flex':'none';
+  if(elVerifyStep) elVerifyStep.style.display='none';
+  if(elErr) elErr.style.display='none';
+  ['aName','aEmail','aPass'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  if(elOverlay) elOverlay.classList.add('open');
+}
+function switchToSignup(){ openAuth('signup'); }
+function setRole(r){ userRole=r; document.getElementById('rbEmp').classList.toggle('on',r==='employer'); document.getElementById('rbWrk').classList.toggle('on',r==='worker'); }
+function submitAuth(){
+  const email=document.getElementById('aEmail').value.trim();
+  const pass=document.getElementById('aPass').value.trim();
+  if(!email||!pass){ showAuthErr('Please fill in all fields'); return; }
+  if(authMode==='login'){
+    // Check if it's admin account
+    if(email==='calvin@gmail.com' && pass==='admin'){
+      currentUser={name:'Admin',email:'calvin@gmail.com',role:'admin',verified:true};
+    } else {
+      currentUser={name:'User',email,role:'employer',verified:true};
+    }
+    // Demo login
+    currentUser={name:'Demo User',email,role:'employer',verified:true};
+    localStorage.setItem('mc_user',JSON.stringify(currentUser));
+    updateNavAuth();
+    closeOverlay('authOverlay');
+    toast('Welcome back! 👋');
+  } else {
+    const name=document.getElementById('aName').value.trim();
+    if(!name){ showAuthErr('Please enter your name'); return; }
+    // Show verify step (demo)
+    const btn=document.getElementById('aBtn');
+    const sw=document.getElementById('aSw');
+    const photoGrp=document.getElementById('photoGrp');
+    const nameGrp=document.getElementById('nameGrp');
+    const roleTog=document.getElementById('roleTog');
+    const verifyStep=document.getElementById('verifyStep');
+    const verifyMsg=document.getElementById('verifyMsg');
+    const emailField=document.getElementById('aEmail')?.closest('.fg');
+    const passField=document.getElementById('aPass')?.closest('.fg');
+    if(btn) btn.style.display='none';
+    if(sw) sw.style.display='none';
+    if(photoGrp) photoGrp.style.display='none';
+    if(nameGrp) nameGrp.style.display='none';
+    if(roleTog) roleTog.style.display='none';
+    if(emailField) emailField.style.display='none';
+    if(passField) passField.style.display='none';
+    if(verifyStep) verifyStep.style.display='block';
+    if(verifyMsg) verifyMsg.textContent=`Enter the 6-digit code sent to ${email}`;
+    toast('Verification code sent to your email! (demo: use 123456)','📧');
+  }
+}
+function moveCode(inp,idx){
+  if(inp.value.length===1 && idx<5) document.getElementById('c'+(idx+1)).focus();
+}
+function handlePhotoUpload(input){if(input.files && input.files[0]){const file=input.files[0];if(!file.type.startsWith('image/')){alert('Please select an image file');return;}const reader=new FileReader();reader.onload=function(e){const photoData=e.target.result;localStorage.setItem('mc_photoData',photoData);document.getElementById('photoPreview').src=photoData;document.getElementById('photoPreview').style.display='block';};reader.readAsDataURL(file);}}
+function submitVerify(){
+  const code=['c0','c1','c2','c3','c4','c5'].map(id=>document.getElementById(id).value).join('');
+  if(code==='123456'||code.length===6){
+    const photoData=localStorage.getItem('mc_photoData');currentUser={name:document.getElementById('aName').value,email:document.getElementById('aEmail').value,role:userRole,verified:true,photo:photoData};
+    localStorage.setItem('mc_user',JSON.stringify(currentUser));
+    updateNavAuth();
+    closeOverlay('authOverlay');
+    toast('Email verified! Welcome to MuduguduConnect 🎉');
+    if(userRole==='worker') goPage('register-worker');
+  } else {
+    toast('Incorrect code. Try 123456 for demo.','⚠️',true);
+  }
+}
+function showAuthErr(msg){ const e=document.getElementById('aErr'); e.textContent=msg; e.style.display='block'; }
+function updateNavAuth(){
+  // Check admin access
+
+  const u=currentUser||JSON.parse(localStorage.getItem('mc_user')||'null');
+  document.getElementById('navLogin').style.display=u?'none':'inline-flex';
+  document.getElementById('navSignup').style.display=u?'none':'inline-flex';
+  document.getElementById('navLogout').style.display=u?'inline-flex':'none';
+  const isAdmin=u && u.email==='calvin@gmail.com';
+  const dashBtn=document.getElementById('navDashboard');
+  if(dashBtn) dashBtn.style.display=(u && isAdmin)?'inline-flex':'none';
+}
+
+function goToDashboard(){
+  const u=currentUser||JSON.parse(localStorage.getItem('mc_user')||'null');
+  if(!u || u.email!=='calvin@gmail.com'){
+    toast('Access denied. Dashboard is for administrators only.','🔒',true);
+    return;
+  }
+  window.location.href='dashboard.html';
+}
+function logout(){ 
+  currentUser = null;
+  const token = localStorage.getItem('mc_token');
+  localStorage.removeItem('mc_user'); 
+  localStorage.removeItem('mc_token'); 
+  localStorage.removeItem('mc_extra');
+  
+  // Call API logout endpoint if token exists
+  if(token) {
+    fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    }).catch(() => {});
+  }
+  
+  updateNavAuth(); 
+  toast('Logged out successfully.'); 
+}
+
+// ═══════════════════════════════════════
+// CONTACT / WHATSAPP
+// ═══════════════════════════════════════
+function openContact(id){
+  contactWorker=workers.find(x=>x.id===id);
+  if(!contactWorker) return;
+  document.getElementById('contactHd').textContent=`Contact ${contactWorker.name} — ${contactWorker.job}`;
+  const thread=document.getElementById('msgThread');
+  thread.innerHTML=`<div class="msg-bubble in">Hello ${contactWorker.name}! I saw your profile on MuduguduConnect and I'm interested in your services.<span class="msg-time">You · Just now</span></div>`;
+  document.getElementById('contactOverlay').classList.add('open');
+}
+function sendWhatsApp(){
+  if(!contactWorker) return;
+  const name=document.getElementById('cName').value||'a client';
+  const date=document.getElementById('cDate').value;
+  const msg=document.getElementById('cMsg').value;
+  const text=encodeURIComponent(`Hello ${contactWorker.name}! I found you on MuduguduConnect.\n\nI'm ${name} and I need a ${contactWorker.job}${date?` on ${date}`:''}.\n${msg?`\nMessage: ${msg}`:''}\n\nCould you help me? 🙏`);
+  window.open(`https://wa.me/${contactWorker.phone}?text=${text}`,'_blank');
+  closeOverlay('contactOverlay');
+  jobsMade++; document.getElementById('statJobs').textContent=jobsMade+'+';
+  toast(`Opening WhatsApp with ${contactWorker.name}...`,'📱');
+}
+function sendMsg(){
+  const name=document.getElementById('cName').value.trim();
+  const msg=document.getElementById('cMsg').value.trim();
+  if(!name||!msg){ toast('Please fill in your name and message.','⚠️',true); return; }
+  const thread=document.getElementById('msgThread');
+  const bubble=document.createElement('div');
+  bubble.className='msg-bubble out';
+  bubble.innerHTML=`${msg}<span class="msg-time">You · Just now</span>`;
+  thread.appendChild(bubble);
+  thread.scrollTop=thread.scrollHeight;
+  document.getElementById('cMsg').value='';
+  closeOverlay('contactOverlay');
+  jobsMade++; document.getElementById('statJobs').textContent=jobsMade+'+';
+  toast(`Message sent! ${contactWorker?.name||'The worker'} will contact you soon.`,'📱');
+}
+
+// ═══════════════════════════════════════
+// REVIEW
+// ═══════════════════════════════════════
+function openReview(id){ reviewTarget=id; starRating=0; updateStars(0); document.getElementById('reviewOverlay').classList.add('open'); }
+function setStar(n){ starRating=n; updateStars(n); }
+function updateStars(n){
+  document.querySelectorAll('.star-btn').forEach(b=>{
+    const active=parseInt(b.dataset.s)<=n;
+    b.classList.toggle('on',active);
+    b.style.opacity=active?'1':'.3';
+    b.style.color=active?'var(--warn)':'#ccc';
+  });
+}
+function submitReview(){
+  if(!starRating){ toast('Please choose a rating (1-5 stars).','⭐',true); return; }
+  const name=document.getElementById('rName').value.trim();
+  const txt=document.getElementById('rText').value.trim();
+  if(!name||!txt){ toast('Please fill in all fields.','⚠️',true); return; }
+  const w=workers.find(x=>x.id===reviewTarget);
+  if(w){
+    if(!w.reviewList) w.reviewList=[];
+    const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    w.reviewList.unshift({name,stars:starRating,txt,date:today});
+    const total=w.reviewList.reduce((s,r)=>s+r.stars,0);
+    w.rating=Math.round((total/w.reviewList.length)*10)/10;
+    w.reviews=w.reviewList.length;
+  }
+  closeOverlay('reviewOverlay');
+  toast('Thank you for your review!','⭐');
+  if(reviewTarget===profileWorker?.id) openProfile(reviewTarget);
+}
+
+// ═══════════════════════════════════════
+// REPORT
+// ═══════════════════════════════════════
+function openReport(id){ reportTarget=id; document.getElementById('reportOverlay').classList.add('open'); }
+function submitReport(){
+  const reason=document.querySelector('input[name="repReason"]:checked')?.value;
+  if(!reason){ toast('Please select a reason.','⚠️',true); return; }
+  closeOverlay('reportOverlay');
+  toast('Report submitted. Thank you for helping keep the community safe.','🛡️');
+}
+
+// ═══════════════════════════════════════
+// EMERGENCY MODE
+// ═══════════════════════════════════════
+function openEmergency(){
+  loadEmergency();
+  document.getElementById('emergencyOverlay').classList.add('open');
+}
+function loadEmergency(){
+  const job=document.getElementById('emergJob')?.value||'';
+  let list=workers.filter(w=>w.avail==='Available Now'&&w.online);
+  if(job) list=list.filter(w=>w.job===job);
+  list.sort((a,b)=>b.trust-a.trust);
+  const g=document.getElementById('emergGrid');
+  if(g) g.innerHTML=list.length
+    ? list.map(w=>`<div class="wcard" style="border-color:var(--g500)" onclick="closeOverlay('emergencyOverlay');openProfile(${w.id})">
+        <div class="avail-dot avail"></div>
+        <div class="wcard-top">
+          <div class="ava" style="background:${COLORS[w.id%COLORS.length]}">${w.name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+          <div class="wi"><h3>${w.name}</h3><span class="wjob">${w.job}</span><div style="font-size:.72rem;color:#15803D;margin-top:3px">● Online now · ${w.loc}</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn-p btn-wa" style="flex:1;justify-content:center;font-size:.8rem;padding:9px" onclick="event.stopPropagation();closeOverlay('emergencyOverlay');openContact(${w.id})">📱 WhatsApp</button>
+        </div>
+      </div>`).join('')
+    : '<p style="color:var(--ink3);padding:16px 0">No workers available right now. Try expanding your search.</p>';
+}
+
+// ═══════════════════════════════════════
+// CHATBOT
+// ═══════════════════════════════════════
+const JOB_MAP={clean:'Cleaner',cleaner:'Cleaner',cleaning:'Cleaner',baby:'Babysitter',babysitter:'Babysitter',enfant:'Babysitter',guard:'Guard',security:'Guard',gardien:'Guard',cook:'Cook',chef:'Cook',cuisinier:'Cook',garden:'Gardener',gardener:'Gardener',jardinier:'Gardener',driver:'Driver',chauffeur:'Driver',nurse:'Nurse',infirmier:'Nurse',night:'Night guard',nuit:'Night guard',gukaraba:'Cleaner',umukozi:'Cleaner',umunara:'Guard'};
+function extractIntent(text){
+  const t=text.toLowerCase();
+  let job=null,location=null,avail=false;
+  for(const [k,v] of Object.entries(JOB_MAP)){ if(t.includes(k)){ job=v; break; } }
+  for(const loc of DISTRICTS){ if(t.includes(loc.toLowerCase())){ location=loc; break; } }
+  if(t.includes('now')||t.includes('maintenant')||t.includes('vite')||t.includes('urgent')||t.includes('disponible')||t.includes('nonaha')) avail=true;
+  return {job,location,avail};
+}
+function openChat(){ document.getElementById('chatWindow').classList.add('open'); document.getElementById('chatFab').style.display='none'; }
+function closeChat(){ document.getElementById('chatWindow').classList.remove('open'); document.getElementById('chatFab').style.display='flex'; }
+function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const msg=inp.value.trim();
+  if(!msg) return;
+  inp.value='';
+  addChatMsg(msg,'user');
+  setTimeout(()=>{
+    const {job,location,avail}=extractIntent(msg);
+    let list=[...workers];
+    if(job) list=list.filter(w=>w.job===job);
+    if(location) list=list.filter(w=>w.loc===location);
+    if(avail) list=list.filter(w=>w.avail==='Available Now');
+    list.sort((a,b)=>b.rating-a.rating);
+    const reply=list.length
+      ? `Found ${list.length} worker${list.length!==1?'s':''}${job?` for "${job}"`:''} ${location?`in ${location}`:''}${avail?' available now':''}. Here they are:`
+      : `No workers found for "${msg}". Try different keywords like job type or neighborhood.`;
+    addChatMsg(reply,'bot');
+    const res=document.getElementById('chatResults');
+    if(res){
+      res.innerHTML=list.slice(0,3).map(w=>`<div class="chat-result-card" onclick="closeChat();openProfile(${w.id})">
+        <div class="ava" style="background:${COLORS[w.id%COLORS.length]};width:36px;height:36px;font-size:.9rem;flex-shrink:0">${w.name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:.85rem">${w.name}</div>
+          <div style="font-size:.75rem;color:var(--ink3)">${w.job} · ${w.loc} · ${w.rating}⭐</div>
+        </div>
+        <button class="wa-btn" style="font-size:.72rem;padding:5px 9px" onclick="event.stopPropagation();closeChat();openContact(${w.id})">📱</button>
+      </div>`).join('');
+    }
+  },600);
+}
+function addChatMsg(text,who){
+  const body=document.getElementById('chatBody');
+  const div=document.createElement('div');
+  div.className='chat-msg '+who;
+  div.textContent=text;
+  body.appendChild(div);
+  body.scrollTop=body.scrollHeight;
+}
+
+// ═══════════════════════════════════════
+// TAG INPUT
+// ═══════════════════════════════════════
+function handleTag(e){
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const v=e.target.value.trim().replace(/,/g,'');
+    if(v&&!curTags.includes(v)){ curTags.push(v); renderTags(); updateProgress(); }
+    e.target.value='';
+  }
+}
+function removeTag(i){ curTags.splice(i,1); renderTags(); updateProgress(); }
+function renderTags(){
+  const wrap=document.getElementById('tagWrap');
+  const inp=document.getElementById('tagInput');
+  wrap.innerHTML='';
+  curTags.forEach((t,i)=>{
+    const el=document.createElement('span');
+    el.className='tag-inp-tag';
+    el.innerHTML=`${t}<button onclick="removeTag(${i})" type="button">×</button>`;
+    wrap.appendChild(el);
+  });
+  wrap.appendChild(inp);
+}
+
+// ═══════════════════════════════════════
+// PROFILE COMPLETENESS
+// ═══════════════════════════════════════
+function updateProgress(){
+  const fields=[{id:'rw-name',l:'Name'},{id:'rw-phone',l:'Phone'},{id:'rw-job',l:'Job'},{id:'rw-location',l:'Location'},{id:'rw-bio',l:'Description'},{id:'rw-rate',l:'Rate'}];
+  const done=fields.filter(f=>document.getElementById(f.id)?.value?.trim());
+  const tagDone=curTags.length>0;
+  const total=done.length+(tagDone?1:0);
+  const pct=Math.round(total/(fields.length+1)*100);
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progFill').style.width=pct+'%';
+  const missing=fields.filter(f=>!document.getElementById(f.id)?.value?.trim()).map(f=>f.l);
+  if(!tagDone) missing.push('Skills');
+  document.getElementById('progTips').innerHTML=missing.slice(0,4).map(l=>`<span class="prog-tip">+ ${l}</span>`).join('');
+}
+
+// ═══════════════════════════════════════
+// SUBMIT PROFILE
+// ═══════════════════════════════════════
+function submitProfile(){
+  const name=document.getElementById('rw-name').value.trim();
+  const phone=document.getElementById('rw-phone').value.trim();
+  const job=document.getElementById('rw-job').value;
+  const loc=document.getElementById('rw-location').value;
+  const bio=document.getElementById('rw-bio').value.trim();
+  const rate=parseInt(document.getElementById('rw-rate').value)||0;
+  const exp=parseInt(document.getElementById('rw-exp').value)||0;
+  const avail=document.getElementById('rw-avail').value;
+  if(!name||!phone||!job||!loc||!bio){
+    const e=document.getElementById('rw-err');
+    e.textContent='Please fill in all required fields (*)'; e.style.display='block'; return;
+  }
+  document.getElementById('rw-err').style.display='none';
+  const w={id:Date.now(),name,phone,job,loc,avail,bio,rate,exp,rating:5.0,reviews:0,trust:70,verified:false,skills:curTags,boosted:false,online:true,reviewList:[]};
+  workers.push(w);
+  const saved=JSON.parse(localStorage.getItem('mc_extra')||'[]');
+  saved.push(w); localStorage.setItem('mc_extra',JSON.stringify(saved));
+  ['rw-name','rw-phone','rw-bio','rw-exp','rw-rate'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('rw-job').value='';
+  document.getElementById('rw-location').value='';
+  curTags=[]; renderTags(); updateProgress();
+  renderFeatured();
+  toast(`${name}'s profile published! 🎉`,'🎉');
+  goPage('browse');
+}
+
+// ═══════════════════════════════════════
+// MODAL UTILS
+// ═══════════════════════════════════════
+function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
+});
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+(function init(){
+  const saved=localStorage.getItem('mc_user');
+  if(saved) try{ currentUser=JSON.parse(saved); } catch(e){}
+  updateNavAuth();
+  fetchWorkers().then(() => {
+    renderCats();
+    renderFeatured();
+    renderTicker();
+  });
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
